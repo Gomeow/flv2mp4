@@ -10,7 +10,17 @@ import os
 import sys
 import time
 import subprocess
+from tempfile import *
 
+#Single Instance only
+f = NamedTemporaryFile( prefix='lockflv2mp4_', delete=True) if not [f  for f in     os.listdir('/tmp') if f.find('lockflv2mp4_')!=-1] else sys.exit()
+
+#Dodge Time
+now_hour = time.localtime(time.time()).tm_hour
+if (now_hour > 8) and (now_hour < 23):
+    sys.exit()
+
+#Main
 def file_gothrough(path,suffix):
     file_list=[]
     for root,dirs,files in os.walk(path):
